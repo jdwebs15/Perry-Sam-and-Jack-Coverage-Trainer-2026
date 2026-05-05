@@ -9,7 +9,6 @@
     :root{
       --bg:#07111f;
       --panel:#101c2f;
-      --panel2:#13243b;
       --text:#f5f7fb;
       --muted:#a9b6c8;
       --line:rgba(255,255,255,.14);
@@ -145,12 +144,6 @@
       color:#04111f;
     }
 
-    .ghost{
-      background:rgba(255,255,255,.08);
-      color:white;
-      border:1px solid var(--line);
-    }
-
     .meta-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -178,7 +171,7 @@
 
     .field{
       border:1px solid rgba(255,255,255,.16);
-      background:#173b24;
+      background:#123d24;
       border-radius:18px;
       padding:14px;
       margin:14px 0;
@@ -190,9 +183,8 @@
       max-width:900px;
       display:block;
       margin:auto;
-      background:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-      background-size:72px 100%;
       border-radius:14px;
+      background:#143f25;
     }
 
     .q-title{
@@ -279,8 +271,8 @@
     <div class="kicker">Legend Mastery Series • Sam & Jack Coverages</div>
     <h1>Deuces Coverage</h1>
     <p class="sub">
-      Train the Deuces family from OKIE, TITE, and BASE. Read the double-call, recognize the safety check,
-      react to High Hat, and execute the correct Sam/Jack rule based on #2 and #1.
+      Train Deuces from OKIE, TITE, and BASE. Offense is always shown at the top.
+      Defense is always shown at the bottom. Sam and Jack drop upward into coverage.
     </p>
   </header>
 
@@ -329,7 +321,7 @@ const QUESTIONS = [
       "Sit flat-footed at five yards and wait for the quarterback to declare."
     ],
     correct:0,
-    explain:"Correct. In Deuces, the OLB opens to #2, feels #2, sees #1, walls/carries #2 vertical to 10–12, releases to safety, squares up, and gets eyes backside/QB."
+    explain:"Correct. In Deuces, Sam/Jack open to #2, feel #2, see #1, wall/carry #2 vertical to 10–12, release to safety, square up, and get eyes backside/QB."
   },
   {
     front:"TITE",
@@ -347,7 +339,7 @@ const QUESTIONS = [
       "Blitz because #2 went inside."
     ],
     correct:0,
-    explain:"Correct. When #2 comes under immediately, Deuces converts to Solo technique: communicate it, clear slant, square, sink, eyes backside, and drive the drag."
+    explain:"Correct. When #2 comes under immediately, Deuces converts to Solo technique: communicate, clear slant, square, sink, eyes backside, and drive the drag."
   },
   {
     front:"BASE",
@@ -401,17 +393,17 @@ const QUESTIONS = [
       "Drive the hitch immediately without respecting the seam."
     ],
     correct:0,
-    explain:"Correct. Your trainer language says if #1 sits, play seam-to-flat, help on probable Smash, and read QB shoulder break to hitch."
+    explain:"Correct. If #1 sits, play seam-to-flat, help on probable Smash, and read QB shoulder break to hitch."
   },
   {
     front:"BASE",
     call:"Deuces-Match",
     formation:"2x2 Doubles",
     check:"Deuces-Deuces",
-    route:"#2 runs vertical; #1 outside releases vertical.",
+    route:"#2 vertical; #1 outside releases vertical.",
     focus:"Both sides",
     diagram:"fourverts",
-    question:"Both #1 and #2 threaten vertically. What keeps the Sam/Jack from opening a clean window behind the ILBs?",
+    question:"Both #1 and #2 threaten vertically. What keeps Sam/Jack from opening a clean window behind the ILBs?",
     answers:[
       "Wall #2 off and carry him 10–12 before releasing and squaring up.",
       "Open flat immediately and widen to the sideline.",
@@ -437,7 +429,7 @@ const QUESTIONS = [
       "Rush because Solo means no pass drop."
     ],
     correct:0,
-    explain:"Correct. In a 3x1 single-receiver-side Solo check, there is no #2 weak. Use Solo technique: open, clear slant, square, sink, eyes backside, drive drag."
+    explain:"Correct. In a 3x1 single-receiver-side Solo check, there is no #2 weak. Use Solo technique."
   },
   {
     front:"TITE",
@@ -473,7 +465,7 @@ const QUESTIONS = [
       "Turn it into Solo immediately because any out route means Solo."
     ],
     correct:0,
-    explain:"Correct. Immediate out and vertical-then-out are not the same. The OLB must stay disciplined: feel #2, see #1, wall/carry, and react within the rule."
+    explain:"Correct. Immediate out and vertical-then-out are not the same. Stay disciplined."
   },
   {
     front:"OKIE",
@@ -491,7 +483,7 @@ const QUESTIONS = [
       "Ignore #1 because the safety owns all verticals."
     ],
     correct:0,
-    explain:"Correct. Immediate under by #2 makes the OLB convert to Solo technique. Clear the slant first, then square/sink and get eyes backside."
+    explain:"Correct. Immediate under by #2 makes the OLB convert to Solo technique."
   },
   {
     front:"TITE",
@@ -527,7 +519,7 @@ const QUESTIONS = [
       "Because Deuces is a pure man call on #2."
     ],
     correct:0,
-    explain:"Correct. The OLB cannot stare only at #2. He must feel #2 and see #1 because #1 inside before 10 triggers release #2/jump #1."
+    explain:"Correct. The OLB cannot stare only at #2. He must feel #2 and see #1."
   },
   {
     front:"OKIE",
@@ -573,7 +565,7 @@ const QUESTIONS = [
     route:"#2 immediate out to both sides.",
     focus:"Both corners and OLBs",
     diagram:"out",
-    question:"When #2 is immediately out in Deuces, what phrase should the Sam/Jack remember?",
+    question:"When #2 is immediately out in Deuces, what phrase should Sam/Jack remember?",
     answers:[
       "2-to-1 with understanding that the corner matches out now.",
       "Solo conversion every time #2 goes out.",
@@ -646,7 +638,6 @@ function startScreen(){
       <h2>Deuces Coverage Trainer</h2>
       <p class="sub">
         Enter your name. You must finish with 100% accuracy to earn a mastery ticket.
-        Misses count against the run, even if you correct the answer after feedback.
       </p>
       <input id="nameInput" placeholder="Player name" autocomplete="off" />
       <button class="primary" onclick="startGame()">Start Deuces Game</button>
@@ -796,144 +787,183 @@ function finalScreen(){
 
 function diagram(type){
   const base = `
-    <svg viewBox="0 0 900 420" role="img" aria-label="Football coverage diagram">
-      <line x1="40" y1="210" x2="860" y2="210" stroke="white" stroke-width="3" opacity=".9"/>
-      <text x="42" y="202" fill="white" font-size="14">LOS</text>
+    <svg viewBox="0 0 900 460" role="img" aria-label="Football coverage diagram">
 
-      <circle cx="450" cy="250" r="18" fill="#111827" stroke="white" stroke-width="2"/>
-      <text x="441" y="256" fill="white" font-size="16">QB</text>
+      <defs>
+        <marker id="yellowArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#facc15"/>
+        </marker>
+        <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+        </marker>
+        <marker id="greenArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#22c55e"/>
+        </marker>
+      </defs>
 
-      <rect x="380" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
-      <rect x="412" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
-      <rect x="444" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
-      <rect x="476" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
-      <rect x="508" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="0" y="0" width="900" height="460" fill="#143f25"/>
 
-      <circle cx="250" cy="225" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-      <text x="239" y="231" fill="white" font-size="16">S</text>
+      <g opacity=".18" stroke="white" stroke-width="1">
+        <line x1="80" y1="30" x2="80" y2="430"/>
+        <line x1="160" y1="30" x2="160" y2="430"/>
+        <line x1="240" y1="30" x2="240" y2="430"/>
+        <line x1="320" y1="30" x2="320" y2="430"/>
+        <line x1="400" y1="30" x2="400" y2="430"/>
+        <line x1="480" y1="30" x2="480" y2="430"/>
+        <line x1="560" y1="30" x2="560" y2="430"/>
+        <line x1="640" y1="30" x2="640" y2="430"/>
+        <line x1="720" y1="30" x2="720" y2="430"/>
+        <line x1="800" y1="30" x2="800" y2="430"/>
+      </g>
 
-      <circle cx="650" cy="225" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-      <text x="640" y="231" fill="white" font-size="16">J</text>
+      <line x1="40" y1="210" x2="860" y2="210" stroke="white" stroke-width="3"/>
+      <text x="50" y="200" fill="white" font-size="15" font-weight="900">LOS</text>
 
-      <circle cx="190" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="179" y="86" fill="white" font-size="15">#1</text>
+      <text x="405" y="32" fill="#dbeafe" font-size="16" font-weight="900">OFFENSE</text>
+      <text x="405" y="445" fill="#dbeafe" font-size="16" font-weight="900">DEFENSE</text>
 
-      <circle cx="300" cy="120" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="289" y="126" fill="white" font-size="15">#2</text>
+      <!-- Offensive line and QB at top -->
+      <rect x="375" y="186" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="407" y="186" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="439" y="186" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="471" y="186" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="503" y="186" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
 
-      <circle cx="710" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="699" y="86" fill="white" font-size="15">#1</text>
+      <circle cx="451" cy="145" r="18" fill="#111827" stroke="white" stroke-width="2"/>
+      <text x="442" y="151" fill="white" font-size="15" font-weight="900">QB</text>
 
-      <circle cx="600" cy="120" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="589" y="126" fill="white" font-size="15">#2</text>
+      <!-- Defense at bottom -->
+      <circle cx="260" cy="310" r="18" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+      <text x="250" y="316" fill="white" font-size="17" font-weight="900">S</text>
 
-      <circle cx="320" cy="55" r="16" fill="#111827" stroke="#facc15" stroke-width="2"/>
-      <text x="310" y="61" fill="white" font-size="14">SS</text>
+      <circle cx="640" cy="310" r="18" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+      <text x="632" y="316" fill="white" font-size="17" font-weight="900">J</text>
 
-      <circle cx="580" cy="55" r="16" fill="#111827" stroke="#facc15" stroke-width="2"/>
-      <text x="571" y="61" fill="white" font-size="14">FS</text>
+      <circle cx="330" cy="395" r="17" fill="#111827" stroke="#facc15" stroke-width="2"/>
+      <text x="320" y="401" fill="white" font-size="14" font-weight="900">SS</text>
+
+      <circle cx="570" cy="395" r="17" fill="#111827" stroke="#facc15" stroke-width="2"/>
+      <text x="561" y="401" fill="white" font-size="14" font-weight="900">FS</text>
+
+      <!-- Default 2x2 receivers at top -->
+      <circle cx="150" cy="80" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="138" y="86" fill="white" font-size="15" font-weight="900">#1</text>
+
+      <circle cx="300" cy="115" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="288" y="121" fill="white" font-size="15" font-weight="900">#2</text>
+
+      <circle cx="750" cy="80" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="738" y="86" fill="white" font-size="15" font-weight="900">#1</text>
+
+      <circle cx="600" cy="115" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="588" y="121" fill="white" font-size="15" font-weight="900">#2</text>
   `;
-
-  const end = `</svg>`;
 
   const routes = {
     vertical: `
-      <path d="M300 120 L300 35" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-      <path d="M600 120 L600 35" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-      <path d="M250 225 C250 175 285 150 300 92" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 615 150 600 92" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <text x="330" y="172" fill="#e0f2fe" font-size="15">Open 2 • Feel 2 • See 1</text>
+      <path d="M300 115 L300 40" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M600 115 L600 40" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+
+      <path d="M260 310 C260 245 285 185 300 125" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C640 245 615 185 600 125" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+
+      <text x="335" y="265" fill="#e0f2fe" font-size="15" font-weight="900">Sam/Jack drop upward: open 2, feel 2, see 1</text>
     `,
+
     drag: `
-      <path d="M300 120 C380 165 500 170 610 150" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C250 180 270 150 300 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M250 170 C230 130 205 110 190 86" stroke="#22c55e" stroke-width="5" fill="none"/>
-      <text x="330" y="185" fill="#e0f2fe" font-size="15">#2 under = Solo conversion</text>
+      <path d="M300 115 C390 145 505 150 625 135" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 250 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M260 250 C235 190 190 125 150 82" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
+      <text x="325" y="245" fill="#e0f2fe" font-size="15" font-weight="900">#2 under = Solo conversion</text>
     `,
+
     inside1: `
-      <path d="M300 120 L300 50" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M190 80 C235 110 265 145 310 160" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C255 180 285 150 300 105" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M250 170 C270 155 290 160 310 160" stroke="#22c55e" stroke-width="5" fill="none"/>
-      <text x="330" y="178" fill="#e0f2fe" font-size="15">#1 inside before 10 = release 2, jump 1</text>
+      <path d="M300 115 L300 45" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M150 80 C205 115 250 150 315 165" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M260 235 C280 190 300 170 315 165" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
+      <text x="330" y="245" fill="#e0f2fe" font-size="15" font-weight="900">#1 inside before 10 = release #2, jump #1</text>
     `,
+
     out: `
-      <path d="M300 120 L360 120" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M600 120 L540 120" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C255 175 285 145 300 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C645 175 615 145 600 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <text x="330" y="170" fill="#e0f2fe" font-size="15">Immediate out: C matches out now</text>
+      <path d="M300 115 L370 115" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M600 115 L530 115" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C640 245 615 175 600 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <text x="340" y="245" fill="#e0f2fe" font-size="15" font-weight="900">Immediate out: corner matches out now</text>
     `,
+
     hitch: `
-      <path d="M190 80 L190 45 L220 45" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M300 120 L300 45" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <text x="330" y="170" fill="#e0f2fe" font-size="15">#1 sits: seam-to-flat, QB shoulder to hitch</text>
+      <path d="M150 80 L150 45 L190 45" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M300 115 L300 45" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <text x="330" y="245" fill="#e0f2fe" font-size="15" font-weight="900">#1 sits: seam-to-flat, QB shoulder to hitch</text>
     `,
+
     fourverts: `
-      <path d="M190 80 L190 25" stroke="#facc15" stroke-width="5"/>
-      <path d="M300 120 L300 25" stroke="#facc15" stroke-width="5"/>
-      <path d="M710 80 L710 25" stroke="#facc15" stroke-width="5"/>
-      <path d="M600 120 L600 25" stroke="#facc15" stroke-width="5"/>
-      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 615 145 600 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <text x="360" y="178" fill="#e0f2fe" font-size="15">Wall/carry #2 to protect clean box</text>
+      <path d="M150 80 L150 30" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M300 115 L300 30" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M750 80 L750 30" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M600 115 L600 30" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C640 245 615 175 600 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <text x="345" y="245" fill="#e0f2fe" font-size="15" font-weight="900">Wall/carry #2 to protect clean box</text>
     `,
+
     treysolo: `
-      <circle cx="145" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="134" y="86" fill="white" font-size="15">#1</text>
-      <circle cx="250" cy="105" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="239" y="111" fill="white" font-size="15">#2</text>
-      <circle cx="345" cy="135" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="334" y="141" fill="white" font-size="15">#3</text>
-      <circle cx="730" cy="92" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
-      <text x="719" y="98" fill="white" font-size="15">#1</text>
-      <path d="M650 225 C650 175 690 130 730 95" stroke="#22c55e" stroke-width="5" fill="none"/>
-      <text x="500" y="170" fill="#e0f2fe" font-size="15">Single side Solo: no #2 weak</text>
+      <circle cx="110" cy="75" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="98" y="81" fill="white" font-size="15" font-weight="900">#1</text>
+      <circle cx="230" cy="105" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="218" y="111" fill="white" font-size="15" font-weight="900">#2</text>
+      <circle cx="340" cy="135" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="328" y="141" fill="white" font-size="15" font-weight="900">#3</text>
+
+      <circle cx="760" cy="95" r="18" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="748" y="101" fill="white" font-size="15" font-weight="900">#1</text>
+
+      <path d="M640 310 C650 240 710 150 760 98" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
+      <text x="500" y="250" fill="#e0f2fe" font-size="15" font-weight="900">Single side Solo: no #2 weak</text>
     `,
+
     deucessolo: `
-      <text x="180" y="165" fill="#e0f2fe" font-size="16">Deuces side</text>
-      <text x="630" y="165" fill="#e0f2fe" font-size="16">Solo side</text>
-      <path d="M250 225 C250 175 285 145 300 105" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 690 130 710 86" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="180" y="250" fill="#e0f2fe" font-size="16" font-weight="900">Deuces side</text>
+      <text x="620" y="250" fill="#e0f2fe" font-size="16" font-weight="900">Solo side</text>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C650 240 700 150 750 83" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
     `,
+
     verticalout: `
-      <path d="M300 120 L300 70 L360 70" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C250 175 285 145 300 100" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <text x="330" y="170" fill="#e0f2fe" font-size="15">Vertical first, then out: stay disciplined</text>
+      <path d="M300 115 L300 65 L370 65" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <text x="330" y="245" fill="#e0f2fe" font-size="15" font-weight="900">Vertical first, then out: stay disciplined</text>
     `,
+
     drag1vert: `
-      <path d="M600 120 C520 160 425 170 300 150" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M710 80 L710 25" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 690 130 710 90" stroke="#22c55e" stroke-width="5" fill="none"/>
-      <text x="420" y="180" fill="#e0f2fe" font-size="15">#2 under + #1 vertical = clear slant then sink</text>
+      <path d="M600 115 C510 145 400 150 285 135" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M750 80 L750 30" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M640 310 C650 240 710 150 750 82" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
+      <text x="370" y="245" fill="#e0f2fe" font-size="15" font-weight="900">#2 under + #1 vertical = clear slant then sink</text>
     `,
+
     scramble: `
-      <path d="M300 120 L300 40" stroke="#facc15" stroke-width="5"/>
-      <path d="M600 120 L600 40" stroke="#facc15" stroke-width="5"/>
-      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 615 145 600 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M450 250 C500 250 540 235 580 218" stroke="#ef4444" stroke-width="5" fill="none"/>
-      <text x="370" y="285" fill="#fee2e2" font-size="15">Finish eyes to QB scramble</text>
+      <path d="M300 115 L300 40" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M600 115 L600 40" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C640 245 615 175 600 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M451 145 C510 170 555 195 605 230" stroke="#ef4444" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <text x="365" y="250" fill="#fee2e2" font-size="15" font-weight="900">Finish eyes to QB scramble</text>
     `,
+
     mixed: `
-      <path d="M300 120 L300 35" stroke="#facc15" stroke-width="5"/>
-      <path d="M600 120 C520 160 425 170 300 150" stroke="#facc15" stroke-width="5" fill="none"/>
-      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
-      <path d="M650 225 C650 175 690 130 710 90" stroke="#22c55e" stroke-width="5" fill="none"/>
-      <text x="330" y="178" fill="#e0f2fe" font-size="15">Same call/check — route changes rule</text>
+      <path d="M300 115 L300 40" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M600 115 C510 145 400 150 285 135" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#yellowArrow)"/>
+      <path d="M260 310 C260 245 285 175 300 120" stroke="#38bdf8" stroke-width="5" fill="none" marker-end="url(#blueArrow)"/>
+      <path d="M640 310 C650 240 710 150 750 82" stroke="#22c55e" stroke-width="5" fill="none" marker-end="url(#greenArrow)"/>
+      <text x="330" y="245" fill="#e0f2fe" font-size="15" font-weight="900">Same call/check — route changes rule</text>
     `
   };
 
-  const defs = `
-    <defs>
-      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-        <path d="M0,0 L0,6 L9,3 z" fill="#facc15"/>
-      </marker>
-    </defs>
-  `;
-
-  return base + defs + (routes[type] || routes.vertical) + end;
+  return base + (routes[type] || routes.vertical) + `</svg>`;
 }
 
 startScreen();
