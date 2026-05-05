@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deuces Coverage — Sam & Jack Trainer</title>
+
+  <style>
+    :root{
+      --bg:#07111f;
+      --panel:#101c2f;
+      --panel2:#13243b;
+      --text:#f5f7fb;
+      --muted:#a9b6c8;
+      --line:rgba(255,255,255,.14);
+      --accent:#38bdf8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --yellow:#f59e0b;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:radial-gradient(circle at top left,rgba(56,189,248,.18),transparent 32rem),var(--bg);
+      color:var(--text);
+    }
+
+    .wrap{
+      width:min(1120px,calc(100% - 28px));
+      margin:0 auto;
+      padding:24px 0 46px;
+    }
+
+    .hero{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:26px;
+      background:linear-gradient(135deg,rgba(19,36,59,.96),rgba(9,20,36,.96));
+      margin-bottom:18px;
+    }
+
+    .kicker{
+      color:var(--accent);
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.78rem;
+      margin-bottom:8px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(2rem,5vw,3.4rem);
+      color:white;
+    }
+
+    .sub{
+      color:var(--muted);
+      line-height:1.5;
+      max-width:850px;
+      margin:12px 0 0;
+    }
+
+    .hud{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:16px 0;
+    }
+
+    .hud-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .hud-label{
+      color:var(--muted);
+      font-size:.78rem;
+      text-transform:uppercase;
+      font-weight:900;
+    }
+
+    .hud-value{
+      font-size:1.25rem;
+      font-weight:900;
+      margin-top:4px;
+    }
+
+    .bar{
+      height:12px;
+      background:rgba(255,255,255,.08);
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      margin-bottom:18px;
+    }
+
+    .bar-fill{
+      height:100%;
+      width:0%;
+      background:var(--accent);
+      transition:.25s ease;
+    }
+
+    .screen{
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(16,28,47,.98);
+      padding:22px;
+      box-shadow:0 18px 42px rgba(0,0,0,.28);
+    }
+
+    .start-box{
+      max-width:620px;
+      margin:auto;
+      text-align:center;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#07111f;
+      color:white;
+      font-size:1rem;
+      margin:16px 0;
+    }
+
+    button{
+      border:0;
+      border-radius:12px;
+      padding:12px 16px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .primary{
+      background:var(--accent);
+      color:#04111f;
+    }
+
+    .ghost{
+      background:rgba(255,255,255,.08);
+      color:white;
+      border:1px solid var(--line);
+    }
+
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .meta{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+    }
+
+    .meta b{
+      display:block;
+      color:white;
+      margin-bottom:3px;
+    }
+
+    .meta span{
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .field{
+      border:1px solid rgba(255,255,255,.16);
+      background:#173b24;
+      border-radius:18px;
+      padding:14px;
+      margin:14px 0;
+      overflow:auto;
+    }
+
+    svg{
+      width:100%;
+      max-width:900px;
+      display:block;
+      margin:auto;
+      background:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+      background-size:72px 100%;
+      border-radius:14px;
+    }
+
+    .q-title{
+      font-size:1.35rem;
+      font-weight:900;
+      margin:12px 0;
+      line-height:1.35;
+    }
+
+    .answers{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .answer{
+      width:100%;
+      text-align:left;
+      background:rgba(255,255,255,.07);
+      color:white;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      line-height:1.35;
+    }
+
+    .answer:hover{
+      border-color:var(--accent);
+    }
+
+    .answer.correct{
+      background:rgba(34,197,94,.18);
+      border-color:rgba(34,197,94,.7);
+    }
+
+    .answer.wrong{
+      background:rgba(239,68,68,.18);
+      border-color:rgba(239,68,68,.7);
+    }
+
+    .feedback{
+      margin-top:14px;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      display:none;
+      line-height:1.5;
+    }
+
+    .feedback.good{border-color:rgba(34,197,94,.7)}
+    .feedback.bad{border-color:rgba(239,68,68,.7)}
+
+    .final{
+      text-align:center;
+      max-width:760px;
+      margin:auto;
+    }
+
+    .ticket{
+      margin-top:18px;
+      border:2px solid var(--green);
+      border-radius:18px;
+      padding:18px;
+      background:rgba(34,197,94,.12);
+    }
+
+    .miss-list{
+      text-align:left;
+      margin-top:18px;
+      color:var(--muted);
+    }
+
+    @media(max-width:760px){
+      .hud,.meta-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Legend Mastery Series • Sam & Jack Coverages</div>
+    <h1>Deuces Coverage</h1>
+    <p class="sub">
+      Train the Deuces family from OKIE, TITE, and BASE. Read the double-call, recognize the safety check,
+      react to High Hat, and execute the correct Sam/Jack rule based on #2 and #1.
+    </p>
+  </header>
+
+  <div class="hud">
+    <div class="hud-card">
+      <div class="hud-label">Player</div>
+      <div class="hud-value" id="playerHud">—</div>
+    </div>
+    <div class="hud-card">
+      <div class="hud-label">Progress</div>
+      <div class="hud-value" id="progressHud">0 / 0</div>
+    </div>
+    <div class="hud-card">
+      <div class="hud-label">Accuracy</div>
+      <div class="hud-value" id="accuracyHud">100%</div>
+    </div>
+    <div class="hud-card">
+      <div class="hud-label">Misses</div>
+      <div class="hud-value" id="missHud">0</div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <div class="bar-fill" id="barFill"></div>
+  </div>
+
+  <main class="screen" id="app"></main>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 releases vertical on both sides.",
+    focus:"Sam and Jack",
+    diagram:"vertical",
+    question:"The call is Deuces-Match. The offense aligns 2x2, so the safety checks Deuces-Deuces. On High Hat, #2 releases vertical. What is the Sam/Jack rule?",
+    answers:[
+      "Open to #2, feel #2, see #1, wall #2 off, carry him 10–12 yards, release to safety, square up, eyes backside/QB.",
+      "Rush contain because OKIE puts both OLBs on the edge.",
+      "Immediately jump #1 because Deuces always becomes Solo on High Hat.",
+      "Sit flat-footed at five yards and wait for the quarterback to declare."
+    ],
+    correct:0,
+    explain:"Correct. In Deuces, the OLB opens to #2, feels #2, sees #1, walls/carries #2 vertical to 10–12, releases to safety, squares up, and gets eyes backside/QB."
+  },
+  {
+    front:"TITE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 immediately drags under across the formation.",
+    focus:"Sam side",
+    diagram:"drag",
+    question:"The safety checks Deuces-Deuces. At the snap, #2 to Sam immediately drags under. What does Sam do?",
+    answers:[
+      "Convert to Solo technique: make the in/out communication, clear the slant, square up, sink under curl/comeback, eyes backside, drive on the drag.",
+      "Carry #2 vertically to 12 yards even though he immediately dragged.",
+      "Run with the drag man-to-man across the field immediately.",
+      "Blitz because #2 went inside."
+    ],
+    correct:0,
+    explain:"Correct. When #2 comes under immediately, Deuces converts to Solo technique: communicate it, clear slant, square, sink, eyes backside, and drive the drag."
+  },
+  {
+    front:"BASE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#1 breaks inside before #2 reaches 10 yards.",
+    focus:"Jack side",
+    diagram:"inside1",
+    question:"In Deuces, Jack opens to #2. Before #2 reaches 10 yards, #1 breaks inside. What is Jack's rule?",
+    answers:[
+      "Release #2 to the safety and jump/match #1 breaking inside.",
+      "Stay locked on #2 no matter what #1 does.",
+      "Convert to pass rush because #1 broke inside.",
+      "Drop straight to the middle hook without seeing #1."
+    ],
+    correct:0,
+    explain:"Correct. In Deuces, open to #2, feel #2, see #1. If #1 breaks inside before 10 yards, release #2 and match/jump #1."
+  },
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 runs an immediate out/flat route.",
+    focus:"Sam side",
+    diagram:"out",
+    question:"The call checks to Deuces-Deuces. #2 immediately goes out. What must Sam understand about the corner interaction?",
+    answers:[
+      "Sam works his 2-to-1 rule with the understanding that the corner matches the out now.",
+      "Sam must chase the out immediately and leave #1 uncovered inside.",
+      "Sam must rush because the corner handles all pass coverage.",
+      "Sam must turn his back to #1 and run to the sideline."
+    ],
+    correct:0,
+    explain:"Correct. Deuces includes 2-to-1 responsibility with the understanding that the corner can match the immediate out now."
+  },
+  {
+    front:"TITE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#1 sits/hitches while #2 works vertical/seam.",
+    focus:"Jack side",
+    diagram:"hitch",
+    question:"In Deuces, #1 sits on a hitch/comeback look while #2 works vertical. What is the best OLB response?",
+    answers:[
+      "Play seam-to-flat, help on probable Smash, and read the QB shoulder break to the hitch.",
+      "Ignore #1 completely because Deuces only cares about #2.",
+      "Run with #2 forever and never square up.",
+      "Drive the hitch immediately without respecting the seam."
+    ],
+    correct:0,
+    explain:"Correct. Your trainer language says if #1 sits, play seam-to-flat, help on probable Smash, and read QB shoulder break to hitch."
+  },
+  {
+    front:"BASE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 runs vertical; #1 outside releases vertical.",
+    focus:"Both sides",
+    diagram:"fourverts",
+    question:"Both #1 and #2 threaten vertically. What keeps the Sam/Jack from opening a clean window behind the ILBs?",
+    answers:[
+      "Wall #2 off and carry him 10–12 before releasing and squaring up.",
+      "Open flat immediately and widen to the sideline.",
+      "Sit at five yards and let #2 run untouched.",
+      "Run directly to #1 and ignore #2."
+    ],
+    correct:0,
+    explain:"Correct. Deuces protects the clean box by walling/carrying #2 to 10–12 before release/square."
+  },
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"3x1 Trey",
+    check:"Match-Solo",
+    route:"Single receiver weak; no #2 weak.",
+    focus:"Weak OLB",
+    diagram:"treysolo",
+    question:"The offense aligns 3x1. The trips tag is Match and the single side checks Solo. What is the weak OLB rule?",
+    answers:[
+      "There is no 2-to-1. Open, clear the slant, square, sink under curl/comeback, eyes backside, drive on a drag.",
+      "Work 2-to-1 through #2 because Solo always has a #2 weak.",
+      "Carry the single #1 vertical to safety and ignore all drags.",
+      "Rush because Solo means no pass drop."
+    ],
+    correct:0,
+    explain:"Correct. In a 3x1 single-receiver-side Solo check, there is no #2 weak. Use Solo technique: open, clear slant, square, sink, eyes backside, drive drag."
+  },
+  {
+    front:"TITE",
+    call:"Deuces-Match",
+    formation:"2x1",
+    check:"Deuces-Solo",
+    route:"Two receivers to Sam, single receiver to Jack.",
+    focus:"Sam and Jack",
+    diagram:"deucessolo",
+    question:"The safety checks Deuces-Solo. What should Sam and Jack understand pre-snap?",
+    answers:[
+      "The two-receiver side plays Deuces rules; the single-receiver side plays Solo technique.",
+      "Both sides play the exact same 2-to-1 rule.",
+      "Both OLBs rush because the formation is unbalanced.",
+      "The OLBs make the safety check themselves."
+    ],
+    correct:0,
+    explain:"Correct. The safety makes the check. Two-receiver side = Deuces. Single-receiver side = Solo."
+  },
+  {
+    front:"BASE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 stems vertical, then breaks out late.",
+    focus:"Sam side",
+    diagram:"verticalout",
+    question:"#2 stems vertical first, then breaks out late after Sam has opened and carried him. What is the proper mindset?",
+    answers:[
+      "Stay disciplined in the 2-to-1 rule: feel #2, see #1, wall/carry, then react through the coverage structure.",
+      "Assume it is immediate out and chase flat right now.",
+      "Stop carrying #2 at five yards and stare at the QB.",
+      "Turn it into Solo immediately because any out route means Solo."
+    ],
+    correct:0,
+    explain:"Correct. Immediate out and vertical-then-out are not the same. The OLB must stay disciplined: feel #2, see #1, wall/carry, and react within the rule."
+  },
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 goes inside underneath; #1 pushes vertical.",
+    focus:"Jack side",
+    diagram:"drag1vert",
+    question:"#2 goes underneath immediately and #1 pushes vertical. What is Jack's conversion?",
+    answers:[
+      "Convert to Solo, clear the slant by reading #1's stem, then square and sink under curl/comeback with eyes backside.",
+      "Chase #2 under across the formation with his back turned.",
+      "Carry #2 vertical even though he went under immediately.",
+      "Ignore #1 because the safety owns all verticals."
+    ],
+    correct:0,
+    explain:"Correct. Immediate under by #2 makes the OLB convert to Solo technique. Clear the slant first, then square/sink and get eyes backside."
+  },
+  {
+    front:"TITE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 vertical; QB scrambles after initial route distribution.",
+    focus:"Both sides",
+    diagram:"scramble",
+    question:"After carrying #2 to 10–12 and releasing/squaring, where do Sam and Jack's eyes finish?",
+    answers:[
+      "Eyes backside and eyes to QB for scramble.",
+      "Eyes locked on the sideline.",
+      "Eyes only on #1 with no QB awareness.",
+      "Eyes on the defensive line stunt."
+    ],
+    correct:0,
+    explain:"Correct. The finish is square, eyes backside, and eyes to QB for scramble."
+  },
+  {
+    front:"BASE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 vertical; #1 shallow inside before 10 yards.",
+    focus:"Sam side",
+    diagram:"inside1",
+    question:"Why is 'feel #2, see #1' so important in Deuces?",
+    answers:[
+      "Because #1 breaking inside before 10 changes the OLB from carrying #2 to jumping/matching #1.",
+      "Because the OLB only reads #1 and ignores #2.",
+      "Because the OLB should never square up after opening.",
+      "Because Deuces is a pure man call on #2."
+    ],
+    correct:0,
+    explain:"Correct. The OLB cannot stare only at #2. He must feel #2 and see #1 because #1 inside before 10 triggers release #2/jump #1."
+  },
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 works under immediately and Mike/Will passes the drag.",
+    focus:"Sam side",
+    diagram:"drag",
+    question:"As the drag is passed to Sam after #2 went under, what is the finishing Solo technique?",
+    answers:[
+      "Work high-to-low to the drag after clearing slant and sinking under curl/comeback.",
+      "Run flat immediately with no slant/curl awareness.",
+      "Turn and sprint with the drag from the snap.",
+      "Drop straight backward to the goalpost."
+    ],
+    correct:0,
+    explain:"Correct. Solo conversion is not blind chase. Clear slant, square/sink, eyes backside, then work high-to-low to the drag."
+  },
+  {
+    front:"TITE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 vertical with outside stem.",
+    focus:"Jack side",
+    diagram:"vertical",
+    question:"What is Jack trying to do to #2 when he carries him vertically in Deuces?",
+    answers:[
+      "Wall him off and constrict his outside movement before releasing to the safety.",
+      "Give him a free outside release immediately.",
+      "Force him inside by turning his own back to the QB.",
+      "Stop at three yards and let him run free."
+    ],
+    correct:0,
+    explain:"Correct. Wall #2 off, carry him 10–12, and constrict the window before releasing/squaring."
+  },
+  {
+    front:"BASE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"#2 immediate out to both sides.",
+    focus:"Both corners and OLBs",
+    diagram:"out",
+    question:"When #2 is immediately out in Deuces, what phrase should the Sam/Jack remember?",
+    answers:[
+      "2-to-1 with understanding that the corner matches out now.",
+      "Solo conversion every time #2 goes out.",
+      "Rush contain because #2 went to the flat.",
+      "Man #2 across the field."
+    ],
+    correct:0,
+    explain:"Correct. In Deuces, the OLB works 2-to-1 with the understanding that the corner matches the immediate out now."
+  },
+  {
+    front:"OKIE",
+    call:"Deuces-Match",
+    formation:"2x2 Doubles",
+    check:"Deuces-Deuces",
+    route:"Mixed routes: Sam side #2 vertical; Jack side #2 immediate drag.",
+    focus:"Both OLBs",
+    diagram:"mixed",
+    question:"Same call, same check, different routes. What should happen?",
+    answers:[
+      "Sam plays normal Deuces vertical carry. Jack converts to Solo technique because #2 immediately drags.",
+      "Both OLBs must play the same rule because the call is the same.",
+      "Both OLBs rush because one side converted.",
+      "Sam converts to Solo even though #2 vertical released."
+    ],
+    correct:0,
+    explain:"Correct. Coverage is rules-based. Same call/check can produce different OLB reactions based on the route."
+  }
+];
+
+let player = "";
+let index = 0;
+let correct = 0;
+let misses = [];
+let locked = false;
+
+const app = document.getElementById("app");
+const playerHud = document.getElementById("playerHud");
+const progressHud = document.getElementById("progressHud");
+const accuracyHud = document.getElementById("accuracyHud");
+const missHud = document.getElementById("missHud");
+const barFill = document.getElementById("barFill");
+
+function shuffle(array){
+  const a = [...array];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const gameQuestions = shuffle(QUESTIONS).map(q => {
+  const answerObjects = q.answers.map((text, i) => ({ text, correct: i === q.correct }));
+  return { ...q, answerObjects: shuffle(answerObjects) };
+});
+
+function updateHud(){
+  const answered = index;
+  const pct = answered === 0 ? 100 : Math.round((correct / answered) * 100);
+  playerHud.textContent = player || "—";
+  progressHud.textContent = `${Math.min(index + 1, gameQuestions.length)} / ${gameQuestions.length}`;
+  accuracyHud.textContent = `${pct}%`;
+  missHud.textContent = misses.length;
+  barFill.style.width = `${(index / gameQuestions.length) * 100}%`;
+}
+
+function startScreen(){
+  app.innerHTML = `
+    <div class="start-box">
+      <h2>Deuces Coverage Trainer</h2>
+      <p class="sub">
+        Enter your name. You must finish with 100% accuracy to earn a mastery ticket.
+        Misses count against the run, even if you correct the answer after feedback.
+      </p>
+      <input id="nameInput" placeholder="Player name" autocomplete="off" />
+      <button class="primary" onclick="startGame()">Start Deuces Game</button>
+    </div>
+  `;
+  updateHud();
+}
+
+function startGame(){
+  const input = document.getElementById("nameInput");
+  player = input.value.trim();
+  if(!player){
+    input.focus();
+    return;
+  }
+  index = 0;
+  correct = 0;
+  misses = [];
+  renderQuestion();
+}
+
+function renderQuestion(){
+  locked = false;
+  updateHud();
+
+  if(index >= gameQuestions.length){
+    return finalScreen();
+  }
+
+  const q = gameQuestions[index];
+
+  app.innerHTML = `
+    <div class="meta-grid">
+      <div class="meta"><b>Front</b><span>${q.front}</span></div>
+      <div class="meta"><b>Double Call</b><span>${q.call}</span></div>
+      <div class="meta"><b>Safety Check</b><span>${q.check}</span></div>
+      <div class="meta"><b>Formation</b><span>${q.formation}</span></div>
+      <div class="meta"><b>Route Variation</b><span>${q.route}</span></div>
+      <div class="meta"><b>Focus</b><span>${q.focus}</span></div>
+    </div>
+
+    <div class="field">
+      ${diagram(q.diagram)}
+    </div>
+
+    <div class="q-title">${q.question}</div>
+
+    <div class="answers">
+      ${q.answerObjects.map((a, i) => `
+        <button class="answer" onclick="chooseAnswer(${i})">${a.text}</button>
+      `).join("")}
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+  `;
+}
+
+function chooseAnswer(choiceIndex){
+  if(locked) return;
+  locked = true;
+
+  const q = gameQuestions[index];
+  const buttons = [...document.querySelectorAll(".answer")];
+  const chosen = q.answerObjects[choiceIndex];
+
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if(q.answerObjects[i].correct) btn.classList.add("correct");
+  });
+
+  const feedback = document.getElementById("feedback");
+  feedback.style.display = "block";
+
+  if(chosen.correct){
+    correct++;
+    feedback.className = "feedback good";
+    feedback.innerHTML = `<b>Correct.</b><br>${q.explain}`;
+  } else {
+    buttons[choiceIndex].classList.add("wrong");
+    misses.push({
+      number:index + 1,
+      front:q.front,
+      call:q.call,
+      check:q.check,
+      route:q.route,
+      question:q.question
+    });
+    feedback.className = "feedback bad";
+    feedback.innerHTML = `<b>Not it.</b><br>${q.explain}`;
+  }
+
+  index++;
+  updateHud();
+
+  setTimeout(() => {
+    renderQuestion();
+  }, chosen.correct ? 5000 : 6500);
+}
+
+function finalScreen(){
+  barFill.style.width = "100%";
+  const pct = Math.round((correct / gameQuestions.length) * 100);
+
+  if(pct === 100){
+    app.innerHTML = `
+      <div class="final">
+        <h2>Mastery Complete</h2>
+        <p class="sub">${player}, you completed Deuces Coverage with 100% accuracy.</p>
+        <div class="ticket">
+          <h3>Deuces Coverage Mastery Ticket</h3>
+          <p><b>Player:</b> ${player}</p>
+          <p><b>Score:</b> ${correct} / ${gameQuestions.length}</p>
+          <p><b>Result:</b> 100% Mastery</p>
+        </div>
+        <button class="primary" onclick="location.reload()">Run Again</button>
+      </div>
+    `;
+  } else {
+    app.innerHTML = `
+      <div class="final">
+        <h2>Run Complete — No Ticket Yet</h2>
+        <p class="sub">
+          ${player}, you scored ${pct}%. This trainer requires 100%.
+          Review the misses below, then run it again.
+        </p>
+
+        <div class="miss-list">
+          <h3>Missed Situations</h3>
+          <ol>
+            ${misses.map(m => `
+              <li>
+                <b>${m.front} • ${m.call} • ${m.check}</b><br>
+                Route: ${m.route}<br>
+                Question: ${m.question}
+              </li>
+            `).join("")}
+          </ol>
+        </div>
+
+        <button class="primary" onclick="location.reload()">Try Again</button>
+      </div>
+    `;
+  }
+
+  updateHud();
+}
+
+function diagram(type){
+  const base = `
+    <svg viewBox="0 0 900 420" role="img" aria-label="Football coverage diagram">
+      <line x1="40" y1="210" x2="860" y2="210" stroke="white" stroke-width="3" opacity=".9"/>
+      <text x="42" y="202" fill="white" font-size="14">LOS</text>
+
+      <circle cx="450" cy="250" r="18" fill="#111827" stroke="white" stroke-width="2"/>
+      <text x="441" y="256" fill="white" font-size="16">QB</text>
+
+      <rect x="380" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="412" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="444" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="476" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+      <rect x="508" y="196" width="24" height="24" rx="5" fill="#334155" stroke="white"/>
+
+      <circle cx="250" cy="225" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+      <text x="239" y="231" fill="white" font-size="16">S</text>
+
+      <circle cx="650" cy="225" r="17" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+      <text x="640" y="231" fill="white" font-size="16">J</text>
+
+      <circle cx="190" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="179" y="86" fill="white" font-size="15">#1</text>
+
+      <circle cx="300" cy="120" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="289" y="126" fill="white" font-size="15">#2</text>
+
+      <circle cx="710" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="699" y="86" fill="white" font-size="15">#1</text>
+
+      <circle cx="600" cy="120" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="589" y="126" fill="white" font-size="15">#2</text>
+
+      <circle cx="320" cy="55" r="16" fill="#111827" stroke="#facc15" stroke-width="2"/>
+      <text x="310" y="61" fill="white" font-size="14">SS</text>
+
+      <circle cx="580" cy="55" r="16" fill="#111827" stroke="#facc15" stroke-width="2"/>
+      <text x="571" y="61" fill="white" font-size="14">FS</text>
+  `;
+
+  const end = `</svg>`;
+
+  const routes = {
+    vertical: `
+      <path d="M300 120 L300 35" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+      <path d="M600 120 L600 35" stroke="#facc15" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+      <path d="M250 225 C250 175 285 150 300 92" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 615 150 600 92" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <text x="330" y="172" fill="#e0f2fe" font-size="15">Open 2 • Feel 2 • See 1</text>
+    `,
+    drag: `
+      <path d="M300 120 C380 165 500 170 610 150" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C250 180 270 150 300 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M250 170 C230 130 205 110 190 86" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="330" y="185" fill="#e0f2fe" font-size="15">#2 under = Solo conversion</text>
+    `,
+    inside1: `
+      <path d="M300 120 L300 50" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M190 80 C235 110 265 145 310 160" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C255 180 285 150 300 105" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M250 170 C270 155 290 160 310 160" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="330" y="178" fill="#e0f2fe" font-size="15">#1 inside before 10 = release 2, jump 1</text>
+    `,
+    out: `
+      <path d="M300 120 L360 120" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M600 120 L540 120" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C255 175 285 145 300 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C645 175 615 145 600 120" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <text x="330" y="170" fill="#e0f2fe" font-size="15">Immediate out: C matches out now</text>
+    `,
+    hitch: `
+      <path d="M190 80 L190 45 L220 45" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M300 120 L300 45" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <text x="330" y="170" fill="#e0f2fe" font-size="15">#1 sits: seam-to-flat, QB shoulder to hitch</text>
+    `,
+    fourverts: `
+      <path d="M190 80 L190 25" stroke="#facc15" stroke-width="5"/>
+      <path d="M300 120 L300 25" stroke="#facc15" stroke-width="5"/>
+      <path d="M710 80 L710 25" stroke="#facc15" stroke-width="5"/>
+      <path d="M600 120 L600 25" stroke="#facc15" stroke-width="5"/>
+      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 615 145 600 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <text x="360" y="178" fill="#e0f2fe" font-size="15">Wall/carry #2 to protect clean box</text>
+    `,
+    treysolo: `
+      <circle cx="145" cy="80" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="134" y="86" fill="white" font-size="15">#1</text>
+      <circle cx="250" cy="105" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="239" y="111" fill="white" font-size="15">#2</text>
+      <circle cx="345" cy="135" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="334" y="141" fill="white" font-size="15">#3</text>
+      <circle cx="730" cy="92" r="17" fill="#7f1d1d" stroke="white" stroke-width="2"/>
+      <text x="719" y="98" fill="white" font-size="15">#1</text>
+      <path d="M650 225 C650 175 690 130 730 95" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="500" y="170" fill="#e0f2fe" font-size="15">Single side Solo: no #2 weak</text>
+    `,
+    deucessolo: `
+      <text x="180" y="165" fill="#e0f2fe" font-size="16">Deuces side</text>
+      <text x="630" y="165" fill="#e0f2fe" font-size="16">Solo side</text>
+      <path d="M250 225 C250 175 285 145 300 105" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 690 130 710 86" stroke="#22c55e" stroke-width="5" fill="none"/>
+    `,
+    verticalout: `
+      <path d="M300 120 L300 70 L360 70" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C250 175 285 145 300 100" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <text x="330" y="170" fill="#e0f2fe" font-size="15">Vertical first, then out: stay disciplined</text>
+    `,
+    drag1vert: `
+      <path d="M600 120 C520 160 425 170 300 150" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M710 80 L710 25" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 690 130 710 90" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="420" y="180" fill="#e0f2fe" font-size="15">#2 under + #1 vertical = clear slant then sink</text>
+    `,
+    scramble: `
+      <path d="M300 120 L300 40" stroke="#facc15" stroke-width="5"/>
+      <path d="M600 120 L600 40" stroke="#facc15" stroke-width="5"/>
+      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 615 145 600 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M450 250 C500 250 540 235 580 218" stroke="#ef4444" stroke-width="5" fill="none"/>
+      <text x="370" y="285" fill="#fee2e2" font-size="15">Finish eyes to QB scramble</text>
+    `,
+    mixed: `
+      <path d="M300 120 L300 35" stroke="#facc15" stroke-width="5"/>
+      <path d="M600 120 C520 160 425 170 300 150" stroke="#facc15" stroke-width="5" fill="none"/>
+      <path d="M250 225 C250 175 285 145 300 95" stroke="#38bdf8" stroke-width="5" fill="none"/>
+      <path d="M650 225 C650 175 690 130 710 90" stroke="#22c55e" stroke-width="5" fill="none"/>
+      <text x="330" y="178" fill="#e0f2fe" font-size="15">Same call/check — route changes rule</text>
+    `
+  };
+
+  const defs = `
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L9,3 z" fill="#facc15"/>
+      </marker>
+    </defs>
+  `;
+
+  return base + defs + (routes[type] || routes.vertical) + end;
+}
+
+startScreen();
+</script>
+
+</body>
+</html>
